@@ -7,7 +7,7 @@ module.exports = {
     dropdown: {
       import: './src/dropdown.js',
       library: {
-        name: 'customdropdown',
+        name: 'amarkos-customdropdown',
         type: 'umd',
       },
     },
