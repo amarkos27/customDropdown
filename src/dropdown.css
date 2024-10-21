@@ -1,0 +1,136 @@
+.dropdownContainer * {
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.dropdownContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    background: silver;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    color: white;
+}
+
+.optionsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+    border-radius: 12px;
+    top: 20px;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));
+    opacity: 0;
+    transform-origin: top;
+}
+
+/* ARROW FOR DROPDOWN BUBBLE */
+.optionsContainer::before{
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 12px solid white;
+}
+
+.option {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    appearance: none;
+    border: none;
+    flex: 1 0 40px;
+    width: 150px;
+    background: white;
+}
+
+.option:first-child {
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+}
+
+.option:last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.option:not(:first-child)::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    border-top: .7px solid rgba(0, 0, 0, 0.2);
+    top: 0;
+}
+
+.option:hover::after {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: inherit;
+}
+
+svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    fill: white;
+}
+
+.show {
+    opacity: 1;
+} 
+
+.openDropdown {
+    animation: 0.35s showDropdown;
+}
+
+.closeDropdown {
+    animation: 0.35s closeDropdown;
+    opacity: 0;
+}
+
+@keyframes showDropdown {
+    0% {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+@keyframes closeDropdown {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleY(0);
+    }
+}
