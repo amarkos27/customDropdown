@@ -2,29 +2,16 @@
 import './dropdown.css';
 import Icon from './chevron-down-svgrepo-com.svg';
 
-// async function getIcon() {
-//   const url = Icon;
-//   console.log(url);
-//   const response = await fetch(url);
-
-//   const svg = await response.text();
-//   return svg;
-// }
-
-function Option(optionName) {
+function Option(optionName, func) {
   const button = document.createElement('button');
   button.classList.add('option');
   button.textContent = optionName;
 
-  const addClickListener = (func) => {
-    button.addEventListener('click', () => {
-      if (func) {
-        func();
-      }
-    });
-  };
+  button.addEventListener('click', () => {
+    func();
+  });
 
-  return { button, addClickListener };
+  return button;
 }
 
 function validName(optionName) {
@@ -42,6 +29,13 @@ function validName(optionName) {
   }
 }
 
+function validFunc(func) {
+  if (typeof func === 'function') {
+    return true;
+  } else
+    throw new Error('Second parameter must be a function for click listener');
+}
+
 class Dropdown {
   constructor() {
     const container = document.createElement('div');
@@ -55,9 +49,6 @@ class Dropdown {
     dropdownButton.textContent = 'Menu';
 
     const icon = document.createElement('i');
-    // (async () => {
-    //   icon.innerHTML = await getIcon();
-    // })();
     const svg = document.createElement('svg');
     svg.innerHTML = Icon;
 
@@ -84,15 +75,15 @@ class Dropdown {
     this.remove = () => container.remove();
   }
 
-  createOption(optionName) {
-    if (validName(optionName)) {
-      const option = Option(optionName);
+  createOption(optionName, func) {
+    if (validName(optionName) && validFunc(func)) {
+      const option = Option(optionName, func);
 
       // Replace spaces with underscores if any are present
       const prop_name = optionName.toLowerCase().replace(' ', '_');
       this[prop_name] = option;
 
-      this.optionsContainer.append(option.button);
+      this.optionsContainer.append(option);
     }
   }
 
